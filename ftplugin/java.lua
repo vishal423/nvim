@@ -87,10 +87,10 @@ local config = {
 
 				updateBuildConfiguration = "interactive",
 				runtimes = {
-					{
-						name = "JavaSE-1.8",
-						path = "/opt/jdk1.8.0_202/",
-					},
+					-- {
+					-- 	name = "JavaSE-1.8",
+					-- 	path = "/opt/jdk1.8.0_202/",
+					-- },
 					{
 						name = "JavaSE-17",
 						path = home .. "/.sdkman/candidates/java/17.0.5-amzn/",
