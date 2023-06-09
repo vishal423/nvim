@@ -40,3 +40,6 @@ opt.iskeyword:append("-")
 
 opt.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:."
 opt.list = true
+
+-- Disable readonly mode for vimdiff
+opt.ro = false
