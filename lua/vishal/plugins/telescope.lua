@@ -1,4 +1,4 @@
-local setup, telescope = pcall(require, "telescope")
+local status, telescope = pcall(require, "telescope")
 if not status then
 	return
 end
@@ -8,13 +8,18 @@ if not actions_setup then
 	return
 end
 
--- local themes_setup, themes = pcall(require, "telescope.themes")
--- if not themes_setup then
--- 	return
--- end
-
 telescope.setup({
 	defaults = {
+		dynamic_preview_title = true,
+		layout_strategy = "vertical",
+		layout_config = {
+			vertical = {
+				width = 0.95,
+				height = 0.95,
+				preview_height = 0.4,
+				prompt_position = "bottom",
+			},
+		},
 		mappings = {
 			i = {
 				["<C-k>"] = actions.move_selection_previous,

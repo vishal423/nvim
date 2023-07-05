@@ -16,7 +16,7 @@ end
 local module = {}
 -- enable keybind for available lsp server
 local on_attach = function(client, bufnr)
-	local opts = { noremap = true, silent = true, buffer = bufnr }
+	local opts = { noremap = true, silent = false, buffer = bufnr }
 
 	local keymap = vim.keymap
 	-- set keybinds
@@ -40,7 +40,10 @@ local on_attach = function(client, bufnr)
 	-- end
 	print(client.name)
 	if client.name == "jdtls" then
-		client.resolved_capabilities.document_formatting = false -- disables jdtls formatting
+		keymap.set("n", "<A-o>", "<cmd>lua require'jdtls'.organize_imports()<CR>", opts)
+		keymap.set("n", "crv", "<cmd>lua require'jdtls'.extract_variable()<CR>", opts)
+		keymap.set("n", "crc", "<cmd>lua require'jdtls'.extract_constant()<CR>", opts)
+		keymap.set("n", "crm", "<cmd>lua require'jdtls'.extract_method()<CR>", opts)
 
 		keymap.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
 		keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<CR>", opts)
@@ -93,7 +96,7 @@ lspconfig["emmet_ls"].setup({
 	filetypes = { "javascript" },
 })
 
-lspconfig["sumneko_lua"].setup({
+lspconfig["lua_ls"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	settings = { -- custom settings for lua

@@ -7,8 +7,13 @@ opt.number = true
 -- tabs & indentation
 opt.tabstop = 2
 opt.shiftwidth = 2
+opt.softtabstop = 2
 opt.expandtab = true
 opt.autoindent = true
+opt.smartindent = true
+
+-- recommended row size indicator
+opt.colorcolumn = "100"
 
 -- line wrapping
 opt.wrap = true
@@ -43,3 +48,6 @@ opt.list = true
 
 -- Disable readonly mode for vimdiff
 opt.ro = false
+
+-- fast update
+-- opt.updatetime = 50

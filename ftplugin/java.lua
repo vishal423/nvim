@@ -1,6 +1,10 @@
-vim.opt_local.shiftwidth = 2
-vim.opt_local.tabstop = 2
-vim.opt_local.cmdheight = 2
+local opt = vim.opt_local
+opt.shiftwidth = 4
+opt.tabstop = 4
+opt.cmdheight = 1
+opt.colorcolumn = "100"
+opt.wildignore = "*.class"
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -80,7 +84,6 @@ local config = {
 			format = {
 				enabled = false,
 				-- settings = {
-				-- 	profile = "asdf",
 				-- },
 			},
 			configuration = {

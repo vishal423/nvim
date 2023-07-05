@@ -3,6 +3,15 @@ if not dap_status then
 	return
 end
 
+dap.configurations.java = {
+	{
+		name = "Launch Java",
+		request = "launch",
+		type = "java",
+		vmArgs = "-Dspring.profiles.active=local",
+	},
+}
+
 local dap_ui_status, dapui = pcall(require, "dapui")
 if not dap_ui_status then
 	return
