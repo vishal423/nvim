@@ -43,7 +43,7 @@ opt.splitbelow = true
 -- consider hyphenated words as single word
 opt.iskeyword:append("-")
 
-opt.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:."
+opt.listchars = "eol:¬,tab:->,trail:~,extends:>,precedes:<,space:."
 opt.list = true
 
 -- Disable readonly mode for vimdiff

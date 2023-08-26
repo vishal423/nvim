@@ -31,6 +31,7 @@ return packer.startup(function(use)
 	use({ "nvim-lua/plenary.nvim" })
 
 	use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
+	use({ "EdenEast/nightfox.nvim" })
 	use({ "christoomey/vim-tmux-navigator" }) -- tmux and split window navigation
 	use({ "szw/vim-maximizer" }) -- maximizes and restores current window
 
@@ -98,6 +99,7 @@ return packer.startup(function(use)
 	-- git integration
 	use({ "lewis6991/gitsigns.nvim" }) -- show line modifications on left hand side
 	use({ "tpope/vim-fugitive" }) -- git operations within neovim
+	use({ "pwntester/octo.nvim" }) -- GitHub operations - PR Review / Issues
 
 	-- jdtls extensions
 	use({ "mfussenegger/nvim-jdtls" })
