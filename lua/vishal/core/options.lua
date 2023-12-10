@@ -1,4 +1,4 @@
-local opt = vim.opt -- for conciseness
+local opt = vim.opt
 
 -- line numbers
 opt.relativenumber = true
@@ -51,3 +51,6 @@ opt.ro = false
 
 -- fast update
 -- opt.updatetime = 50
+
+-- turn off swap file
+opt.swapfile = false

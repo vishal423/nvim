@@ -1,8 +1,5 @@
--- import gitsigns plugin safely
-local setup, gitsigns = pcall(require, "gitsigns")
-if not setup then
-	return
-end
-
--- configure/enable gitsigns
-gitsigns.setup()
+return {
+  "lewis6991/gitsigns.nvim",
+  event = { "BufReadPre", "BufNewFile" },
+  config = true,
+}

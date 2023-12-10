@@ -2,21 +2,17 @@ local opt = vim.opt_local
 opt.shiftwidth = 4
 opt.tabstop = 4
 opt.cmdheight = 1
-opt.colorcolumn = "100"
+opt.colorcolumn = "80"
 opt.wildignore = "*.class"
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local status, jdtls = pcall(require, "jdtls")
-if not status then
-	return
-end
-
 local home = os.getenv("HOME")
 WORKSPACE_PATH = home .. "/workspace/"
 
+local jdtls = require("jdtls")
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = WORKSPACE_PATH .. project_name
 
@@ -24,6 +20,7 @@ local workspace_dir = WORKSPACE_PATH .. project_name
 local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
 local root_dir = require("jdtls.setup").find_root(root_markers)
 if root_dir == "" then
+	print("Project root directory not found")
 	return
 end
 
@@ -45,10 +42,8 @@ local cmd = {
 	"--add-opens",
 	"java.base/java.lang=ALL-UNNAMED",
 	"-jar",
-	-- vim.fn.glob("/opt/jdtls17/plugins/org.eclipse.equinox.launcher_*.jar"),
 	vim.fn.glob(home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
 	"-configuration",
-	-- "/opt/jdtls17/config_linux",
 	home .. "/.local/share/nvim/mason/packages/jdtls/config_linux",
 	"-data",
 	workspace_dir,
@@ -83,8 +78,6 @@ local config = {
 			},
 			format = {
 				enabled = false,
-				-- settings = {
-				-- },
 			},
 			configuration = {
 
@@ -152,7 +145,8 @@ vim.list_extend(
 	vim.split(
 		vim.fn.glob(
 			home
-				.. "/.config/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar"
+				.. "/.config/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
+			1
 		),
 		"\n"
 	)
@@ -164,19 +158,9 @@ config["init_options"] = {
 }
 
 -- register java debugger
-config["on_attach"] = require("vishal.plugins.lsp.lspconfig").on_attach
+config["on_attach"] = require("vishal.plugins.lsp.lspconfig").config()
 
--- This starts a new client & server,
--- or attaches to an existing client & server depending on the `root_dir`.
 jdtls.start_or_attach(config)
 
-vim.cmd(
-	"command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
-)
-vim.cmd(
-	"command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)"
-)
-vim.cmd("command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()")
--- vim.cmd "command! -buffer JdtJol lua require('jdtls').jol()"
-vim.cmd("command! -buffer JdtBytecode lua require('jdtls').javap()")
--- vim.cmd "command! -buffer JdtJshell lua require('jdtls').jshell()"
+jdtls.setup_dap({ hotcodereplace = "auto" })
+require("jdtls.dap").setup_dap_main_class_configs()
