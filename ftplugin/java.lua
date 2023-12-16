@@ -161,6 +161,3 @@ config["init_options"] = {
 config["on_attach"] = require("vishal.plugins.lsp.lspconfig").config()
 
 jdtls.start_or_attach(config)
-
-jdtls.setup_dap({ hotcodereplace = "auto" })
-require("jdtls.dap").setup_dap_main_class_configs()

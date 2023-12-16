@@ -50,7 +50,10 @@ opt.list = true
 opt.ro = false
 
 -- fast update
--- opt.updatetime = 50
+opt.updatetime = 50
+
+opt.timeout = true
+opt.timeoutlen = 500
 
 -- turn off swap file
 opt.swapfile = false

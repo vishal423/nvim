@@ -104,6 +104,9 @@ return {
 
 				opts.desc = "Java: Run test near to cursor"
 				keymap.set("n", "<leader>dn", "<cmd>lua require'jdtls'.test_nearest_method()<CR>", opts)
+
+				require("jdtls").setup_dap({ hotcodereplace = "auto" })
+				require("jdtls.dap").setup_dap_main_class_configs()
 			end
 		end
 
