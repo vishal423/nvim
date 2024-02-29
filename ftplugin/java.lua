@@ -2,12 +2,8 @@ local opt = vim.opt_local
 opt.shiftwidth = 4
 opt.tabstop = 4
 opt.cmdheight = 1
-opt.colorcolumn = "80"
+opt.colorcolumn = "100"
 opt.wildignore = "*.class"
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local home = os.getenv("HOME")
 WORKSPACE_PATH = home .. "/workspace/"
@@ -27,6 +23,9 @@ end
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 local cmd = {
 	home .. "/.sdkman/candidates/java/17.0.5-amzn/bin/java",
 	"-Declipse.application=org.eclipse.jdt.ls.core.id1",
@@ -35,6 +34,7 @@ local cmd = {
 	"-Dlog.protocol=true",
 	"-Dlog.level=ALL",
 	"-javaagent:" .. home .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+	"-Xms1g",
 	"-Xmx2g",
 	"--add-modules=ALL-SYSTEM",
 	"--add-opens",
@@ -96,13 +96,10 @@ local config = {
 			signatureHelp = { enabled = true },
 			completion = {
 				favoriteStaticMembers = {
-					"org.hamcrest.MatcherAssert.assertThat",
-					"org.hamcrest.Matchers.*",
-					"org.hamcrest.CoreMatchers.*",
+					"org.mockito.Mockito.*",
 					"org.junit.jupiter.api.Assertions.*",
 					"java.util.Objects.requireNonNull",
 					"java.util.Objects.requireNonNullElse",
-					"org.mockito.Mockito.*",
 				},
 				filteredTypes = {
 					"com.sun.*",
@@ -111,14 +108,20 @@ local config = {
 					"jdk.*",
 					"sun.*",
 				},
+				importOrder = {
+					"com",
+					"org",
+					"javax",
+					"java",
+				},
 			},
 			contentProvider = { preferred = "fernflower" },
 		},
 		extendedClientCapabilities = extendedClientCapabilities,
 		sources = {
 			organizeImports = {
-				starThreshold = 9999,
-				staticStarThreshold = 9999,
+				starThreshold = 5,
+				staticStarThreshold = 3,
 			},
 		},
 		codeGeneration = {
@@ -139,13 +142,13 @@ local config = {
 -- configure java debugger
 local bundles = {}
 
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.config/nvim/vscode-java-test/server/*.jar"), "\n"))
+vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.config/java-dap/vscode-java-test/server/*.jar"), "\n"))
 vim.list_extend(
 	bundles,
 	vim.split(
 		vim.fn.glob(
 			home
-				.. "/.config/nvim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
+				.. "/.config/java-dap/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
 			1
 		),
 		"\n"
@@ -158,6 +161,33 @@ config["init_options"] = {
 }
 
 -- register java debugger
-config["on_attach"] = require("vishal.plugins.lsp.lspconfig").config()
+config["on_attach"] = function(_, bufnr)
+	require("vishal.plugins.lsp.lspconfig").on_attach(_, bufnr)
+	require("vishal.plugins.dap").on_attach(_, bufnr)
+
+	local keymap = vim.keymap -- for conciseness
+	local opts = { noremap = true, silent = true, buffer = bufnr }
+
+	opts.desc = "Java: Organize imports"
+	keymap.set("n", "<leader>oi", "<cmd>lua require'jdtls'.organize_imports()<CR>", opts)
+
+	opts.desc = "Java: Extract Variable"
+	keymap.set("n", "<leader>ev", "<cmd>lua require'jdtls'.extract_variable()<CR>", opts)
+
+	opts.desc = "Java: Extract Constant"
+	keymap.set("n", "<leader>ec", "<cmd>lua require'jdtls'.extract_constant()<CR>", opts)
+
+	opts.desc = "Java: Extract Method"
+	keymap.set("n", "<leader>em", "<cmd>lua require'jdtls'.extract_method()<CR>", opts)
+
+	opts.desc = "Java: Run all tests"
+	keymap.set("n", "<leader>df", "<cmd>lua require'jdtls'.test_class()<CR>", opts)
+
+	opts.desc = "Java: Run test near to cursor"
+	keymap.set("n", "<leader>dn", "<cmd>lua require'jdtls'.test_nearest_method()<CR>", opts)
+
+	require("jdtls").setup_dap({ hotcodereplace = "auto" })
+	require("jdtls.dap").setup_dap_main_class_configs()
+end
 
 jdtls.start_or_attach(config)
