@@ -1,3 +1,4 @@
+-- Plugin to generate file-type specific comment blocks
 return {
   "numToStr/Comment.nvim",
   event = { "BufReadPre", "BufNewFile" },

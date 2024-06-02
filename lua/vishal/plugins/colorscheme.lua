@@ -1,3 +1,4 @@
+-- Plugin to configure default neovim theme
 return {
 	{
 		"bluz71/vim-nightfly-guicolors",

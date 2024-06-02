@@ -1,3 +1,4 @@
+-- Plugin to show brackets, parenthesis in different colors
 return {
 	"hiphish/rainbow-delimiters.nvim",
 	event = { "BufReadPre", "BufNewFile" },

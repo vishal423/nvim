@@ -1,3 +1,4 @@
+-- Plugin to configure Debug Adapter Protocol nvim clients
 local M
 
 local attach_to_debug = function()
@@ -87,6 +88,7 @@ M = {
 	ft = "java",
 	dependencies = {
 		"rcarriga/nvim-dap-ui",
+		"nvim-neotest/nvim-nio",
 	},
 	config = function()
 		local dap = require("dap")
@@ -118,7 +120,7 @@ M = {
 				},
 				{
 					elements = {
-						{ id = "repl", size = 0.25 },
+						"repl",
 						"console",
 					},
 					size = 0.25, -- 25% of total lines

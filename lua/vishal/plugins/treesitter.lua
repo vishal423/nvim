@@ -1,3 +1,4 @@
+-- Plugin to configure treesitter
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -18,6 +19,9 @@ return {
 				},
 				ensure_installed = {
 					"json",
+					"yaml",
+					"markdown",
+					"markdown_inline",
 					"bash",
 					"lua",
 					"vim",

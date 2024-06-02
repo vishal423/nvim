@@ -6,10 +6,10 @@ keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk character sequ
 
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make window splits equal sized" })
-keymap.set("n", "<leader>sx", ":close<CR>", { desc = "Close current split window" })
+keymap.set("n", "<leader>wv", "<C-w>v", { desc = "Split window vertically" })
+keymap.set("n", "<leader>wh", "<C-w>s", { desc = "Split window horizontally" })
+keymap.set("n", "<leader>we", "<C-w>=", { desc = "Make window splits equal sized" })
+keymap.set("n", "<leader>wx", ":close<CR>", { desc = "Close current split window" })
 
 keymap.set("n", "<leader>to", ":tabnew<CR>", { desc = "Open new tab" })
 keymap.set("n", "<leader>tx", ":tabclose<CR>", { desc = "Close current tab" })

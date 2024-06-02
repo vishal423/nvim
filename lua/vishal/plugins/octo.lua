@@ -1,3 +1,4 @@
+-- Plugin to do GitHub code reviews
 return {
 	"pwntester/octo.nvim",
 	config = function()

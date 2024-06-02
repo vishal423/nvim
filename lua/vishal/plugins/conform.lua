@@ -1,3 +1,4 @@
+-- Plugin to configure formatter -- used only for lua
 return {
 	"stevearc/conform.nvim",
 	lazy = true,

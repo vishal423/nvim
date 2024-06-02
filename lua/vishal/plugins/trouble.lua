@@ -1,19 +1,23 @@
+-- Plugin to view diagnostics, LSP references
 return {
 	"folke/trouble.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	keys = {
-		{ "<leader>xx", "<cmd>TroubleToggle<cr>", desc = "Toggle Trouble view" },
-		{
-			"<leader>xw",
-			"<cmd>TroubleToggle workspace_diagnostics<cr>",
-			desc = "Trouble: Toggle workspace diagnostics",
-		},
-		{ "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Trouble: Toggle document diagnostics" },
-		{ "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", desc = "Trouble: Toggle quickfix" },
-		{ "<leader>xl", "<cmd>TroubleToggle loclist<cr>", desc = "Trouble: Toggle loclist" },
-		{ "gR", "<cmd>TroubleToggle lsp_references<cr>", desc = "Trouble: Toggle LSP references" },
+		{ "<leader>xw", "<cmd>Trouble diagnostics toggle<cr>", desc = "Trouble: Toggle diagnostics" },
+		{ "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Trouble: Buffer diagnostics" },
+		{ "<leader>xq", "<cmd>Trouble qflist toggle<cr>", desc = "Trouble: Toggle quickfix" },
 	},
 	opts = {
-		mode = "document_diagnostics",
+		modes = {
+			diagnostics = {
+				mode = "diagnostics",
+				preview = {
+					type = "split",
+					relative = "win",
+					position = "right",
+					size = 0.3,
+				},
+			},
+		},
 	},
 }

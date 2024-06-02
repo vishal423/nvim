@@ -1,11 +1,16 @@
+-- Pllugins to support auto completions
 return {
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
 	dependencies = {
 		"hrsh7th/cmp-buffer", -- source for text in buffer
 		"hrsh7th/cmp-path", -- source for file system paths
-		"L3MON4D3/LuaSnip", -- snippet engine
-		"saadparwaiz1/cmp_luasnip", -- for autocompletion
+		{
+			"L3MON4D3/LuaSnip", -- snippet engine
+			version = "v2.*",
+			build = "make install_jsregexp",
+		},
+		"saadparwaiz1/cmp_luasnip", -- source for luasnip autocompletion
 		"rafamadriz/friendly-snippets", -- useful snippets
 		"onsails/lspkind.nvim", -- vs-code like pictograms
 		"rcarriga/cmp-dap", -- repl completions
@@ -32,11 +37,25 @@ return {
 			mapping = cmp.mapping.preset.insert({
 				["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
 				["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-				["<C-b>"] = cmp.mapping.scroll_docs(-4),
 				["<C-f>"] = cmp.mapping.scroll_docs(4),
+				["<C-b>"] = cmp.mapping.scroll_docs(-4),
 				["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
 				["<C-e>"] = cmp.mapping.abort(), -- close completion window
-				["<CR>"] = cmp.mapping.confirm({ select = false }),
+				["<CR>"] = cmp.mapping.confirm({ select = true }),
+				["<Tab>"] = cmp.mapping(function(fallback)
+					if luasnip.expand_or_jumpable() then
+						luasnip.expand_or_jump()
+					else
+						fallback()
+					end
+				end, { "i", "s" }),
+				["<S-Tab>"] = cmp.mapping(function(fallback)
+					if luasnip.jumpable(-1) then
+						luasnip.jump(-1)
+					else
+						fallback()
+					end
+				end, { "i", "s" }),
 			}),
 			-- sources for autocompletion
 			sources = cmp.config.sources({
