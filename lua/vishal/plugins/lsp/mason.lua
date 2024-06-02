@@ -27,7 +27,6 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
-				-- "tsserver",
 				"jdtls",
 			},
 			-- auto-install configured servers (with lspconfig)
@@ -35,7 +34,9 @@ return {
 		})
 
 		mason_tool_installer.setup({
-			ensure_installed = {},
+			ensure_installed = {
+				"sonarlint-language-server",
+			},
 		})
 	end,
 }
