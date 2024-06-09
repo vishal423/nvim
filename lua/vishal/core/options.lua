@@ -1,5 +1,11 @@
 local opt = vim.opt
 
+-- Enable fuzzy finder to search from current directory recursively
+vim.cmd(" set path+=**")
+
+-- Enable filetype plugin
+vim.cmd(" filetype plugin on")
+
 -- line numbers
 opt.relativenumber = true
 opt.number = true
@@ -17,6 +23,8 @@ opt.colorcolumn = "100"
 
 -- line wrapping
 opt.wrap = true
+opt.scrolloff = 4
+opt.sidescrolloff = 4
 
 -- search settings
 opt.ignorecase = true
