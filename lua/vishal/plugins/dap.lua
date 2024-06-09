@@ -35,7 +35,7 @@ local launch_to_debug17 = function()
 			type = "java",
 			request = "launch",
 			name = "Launch Java Application",
-			vmArgs = "--add-exports=java.base/com.sun.crypto.provider=ALL-UNNAMED -Dspring.profiles.active=local",
+			vmArgs = "--add-exports=java.base/com.sun.crypto.provider=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED -Dspring.profiles.active=local",
 		},
 	}
 	dap.continue()
@@ -109,21 +109,11 @@ M = {
 			layouts = {
 				{
 					elements = {
-						-- Elements can be strings or table with id and size keys.
-						{ id = "scopes", size = 0.25 },
-						-- "breakpoints",
-						-- "stacks",
-						-- "watches",
-					},
-					size = 30, -- 30 columns
-					position = "right",
-				},
-				{
-					elements = {
-						"repl",
+						{ id = "repl", size = 0.15 },
 						"console",
+						{ id = "scopes", size = 0.15 },
 					},
-					size = 0.25, -- 25% of total lines
+					size = 0.45, -- 45 rows
 					position = "bottom",
 				},
 			},

@@ -184,7 +184,18 @@ config["on_attach"] = function(_, bufnr)
 	keymap.set("n", "<leader>df", "<cmd>lua require'jdtls'.test_class()<CR>", opts)
 
 	opts.desc = "Java: Run test near to cursor"
-	keymap.set("n", "<leader>dn", "<cmd>lua require'jdtls'.test_nearest_method()<CR>", opts)
+	keymap.set(
+		"n",
+		"<leader>dn",
+		"<cmd>lua require'jdtls'.test_nearest_method({ config_overrides = { vmArgs = \"--add-exports=java.base/com.sun.crypto.provider=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED\" } })<CR>",
+		opts
+	)
+
+	opts.desc = "Java: Generate Test Class"
+	keymap.set("n", "<leader>gtc", "<cmd>lua require'jdtls.tests'.generate()<CR>", opts)
+
+	opts.desc = "Java: Toggle between Implementation and Tests"
+	keymap.set("n", "<leader>ti", "<cmd>lua require'jdtls.tests'.goto_subjects()<CR>", opts)
 
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
 	require("jdtls.dap").setup_dap_main_class_configs()
