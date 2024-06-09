@@ -4,5 +4,5 @@ return {
 
 	"christoomey/vim-tmux-navigator", -- tmux & split window navigation
 
-	"mfussenegger/nvim-jdtls", -- jdtls language server support
+	{ "vishal423/nvim-jdtls", branch = "junit-diag-feedback" }, -- jdtls language server support
 }
