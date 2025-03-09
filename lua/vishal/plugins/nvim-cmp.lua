@@ -24,6 +24,7 @@ return {
 
 		-- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
 		require("luasnip.loaders.from_vscode").lazy_load()
+		-- luasnip.filetype_extend("java", { "javadoc", "java-tests" })
 
 		cmp.setup({
 			completion = {

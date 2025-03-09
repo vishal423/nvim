@@ -11,6 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 	})
 end
 vim.opt.rtp:prepend(lazypath)
+vim.g.nightflyVirtualTextColor = true
 
 require("lazy").setup({
 	{ import = "vishal.plugins" },

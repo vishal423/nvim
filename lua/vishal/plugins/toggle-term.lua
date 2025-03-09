@@ -7,6 +7,7 @@ return {
 		term.setup({
 			open_mapping = [[tt]],
 			direction = "float",
+			insert_mappings = false,
 		})
 	end,
 }

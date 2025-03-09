@@ -1,6 +1,9 @@
 -- Plugin to do GitHub code reviews
 return {
 	"pwntester/octo.nvim",
+	-- pin version as latest contains incompatible GH enterprise changes
+	commit = "f09ff9413652e3c06a6817ba6284591c00121fe0",
+	pin = true,
 	config = function()
 		local octo = require("octo")
 

@@ -1,7 +1,7 @@
 -- Configure sonarlint for Java applications
 return {
 	"https://gitlab.com/schrieveslaach/sonarlint.nvim",
-	dependencies = { "vishal423/nvim-jdtls", branch="junit-diag-feedback" },
+	dependencies = { "mfussenegger/nvim-jdtls" },
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		require("sonarlint").setup({
